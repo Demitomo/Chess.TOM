@@ -106,7 +106,7 @@ class Board:
 pygame.init()
 window = pygame.display.set_mode((700, 700))
 pygame.display.set_caption("Chess.Tom")
-bg = pygame.image.load("./Python/Chess/V3/Images/Board.png")
+bg = pygame.image.load("../img/Board.png")
 bg = pygame.transform.scale(bg, (640, 640))
 Play = Board(window)
 
