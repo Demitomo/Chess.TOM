@@ -7,9 +7,9 @@ The best chess game made entirely in python!
 3. Uses the position of the mouse to select the pieces and where they should go to
 
 ## To-Dos
-1. Assign the according possible movement to each of the pieces
-2. Castling
-3. En passant
+- [] Assign the according possible movement to each of the pieces
+- [] Castling
+- [] En passant
 
 ## Functionalities of each file
 1. index.py:
