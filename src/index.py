@@ -2,8 +2,8 @@
 To-dos: castle, check if he the piece can reach that square or not
 """
 import pygame
-from Pieces import *
-from Checks import *
+from pieces import *
+from checks import *
 
 class Board:
     def __init__(self, screen):
