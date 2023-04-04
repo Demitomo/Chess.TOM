@@ -8,7 +8,9 @@ def CheckKnight(pos, dest):
     pass
 
 def CheckBishop(pos, dest):
-    pass
+    move  = (1, 1)
+    for i in range(8):
+        pass
 
 def CheckRook(pos, dest):
     pass
