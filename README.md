@@ -7,6 +7,7 @@ The best chess game made entirely in python!
 3. Uses the position of the mouse to select the pieces and where they should go to
 
 ## To-Dos
+- [x] Create GitHub repository
 - [ ] Assign the according possible movement to each of the pieces
 - [ ] Castling
 - [ ] En passant
