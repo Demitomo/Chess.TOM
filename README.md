@@ -9,21 +9,21 @@ The best chess game made entirely in python!
 ## To-Dos
 - Assign the according possible movement to each of the pieces:
 - [x] Knight Moves
-- [ ] Bishop Moves
-- [ ] Rook Moves
-- [ ] King Moves
-- [ ] Queen Moves
-- [ ] Pawn Moves/Takes
+- [x] Bishop Moves
+- [x] Rook Moves
+- [x] King Moves
+- [x] Queen Moves
+- [x] Pawn Moves/Takes
 - [ ] Pawn promotion
 - [ ] Castling
 - [ ] En passant
 
 ## Functionalities of each file
 1. index.py:
-Game loop, 
+Game loop, display the board
 
 2. pieces.py:
-Loads the images and resizes them, 
+Loads the images and resizes them, creates the board
 
 3. checks.py:
 Verifies if the pieces can move to the selected square and if the king is in check
