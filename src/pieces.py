@@ -1,46 +1,39 @@
 import pygame
 
-Brook = pygame.image.load("../img/Brook.png")
-Brook = pygame.transform.scale(Brook, (80, 80))
+WPawn = pygame.image.load("../img/Wpawn.png")
+WKnig = pygame.image.load("../img/Wknig.png")
+WBish = pygame.image.load("../img/Wbish.png")
+WRook = pygame.image.load("../img/Wrook.png")
+WQueen = pygame.image.load("../img/Wqueen.png")
+WKing = pygame.image.load("../img/Wking.png")
+BPawn = pygame.image.load("../img/Bpawn.png")
+BKnig = pygame.image.load("../img/Bknig.png")
+BBish = pygame.image.load("../img/Bbish.png")
+BRook = pygame.image.load("../img/Brook.png")
+BQueen = pygame.image.load("../img/Bqueen.png")
+BKing = pygame.image.load("../img/Bking.png")
 
-Bknig = pygame.image.load("../img/Bknig.png")
-Bknig = pygame.transform.scale(Bknig, (80, 80))
+WPawn = pygame.transform.scale(WPawn, (80, 80))
+WKnig = pygame.transform.scale(WKnig, (80, 80))
+WBish = pygame.transform.scale(WBish, (80, 80))
+WRook = pygame.transform.scale(WRook, (80, 80))
+WQueen = pygame.transform.scale(WQueen, (80, 80))
+WKing = pygame.transform.scale(WKing, (80, 80))
+BPawn = pygame.transform.scale(BPawn, (80, 80))
+BKnig = pygame.transform.scale(BKnig, (80, 80))
+BBish = pygame.transform.scale(BBish, (80, 80))
+BRook = pygame.transform.scale(BRook, (80, 80))
+BQueen = pygame.transform.scale(BQueen, (80, 80))
+BKing = pygame.transform.scale(BKing, (80, 80))
 
-Bbish = pygame.image.load("../img/Bbish.png")
-Bbish = pygame.transform.scale(Bbish, (80, 80))
+bg = pygame.image.load("../img/Board.png")
+bg = pygame.transform.scale(bg, (640, 640))
 
-Bqueen = pygame.image.load("../img/Bqueen.png")
-Bqueen = pygame.transform.scale(Bqueen, (80, 80))
+pieces = ["r", "n", "b", "q", "k", "p", "R", "N", "B", "Q", "K", "P"]
+images = [BRook, BKnig, BBish, BQueen, BKing, BPawn, WRook, WKnig, WBish, WQueen, WKing, WPawn]
 
-Bking = pygame.image.load("../img/Bking.png")
-Bking = pygame.transform.scale(Bking, (80, 80))
-
-Bpawn = pygame.image.load("../img/Bpawn.png")
-Bpawn = pygame.transform.scale(Bpawn, (80, 80))
-
-Wrook = pygame.image.load("../img/Wrook.png")
-Wrook = pygame.transform.scale(Wrook, (80, 80))
-
-Wknig = pygame.image.load("../img/Wknig.png")
-Wknig = pygame.transform.scale(Wknig, (80, 80))
-
-Wbish = pygame.image.load("../img/Wbish.png")
-Wbish = pygame.transform.scale(Wbish, (80, 80))
-
-Wqueen = pygame.image.load("../img/Wqueen.png")
-Wqueen = pygame.transform.scale(Wqueen, (80, 80))
-
-Wking = pygame.image.load("../img/Wking.png")
-Wking = pygame.transform.scale(Wking, (80, 80))
-
-Wpawn = pygame.image.load("../img/Wpawn.png")
-Wpawn = pygame.transform.scale(Wpawn, (80, 80))
-
-Pieces = ["r", "n", "b", "q", "k", "p", "R", "N", "B", "Q", "K", "P"]
-Images = [Brook, Bknig, Bbish, Bqueen, Bking, Bpawn, Wrook, Wknig, Wbish, Wqueen, Wking, Wpawn]
-
-def InitBoard():
-    board = []
+def BoardInit():
+    board =[]
     board.append("r")
     board.append("n")
     board.append("b")
@@ -49,12 +42,9 @@ def InitBoard():
     board.append("b")
     board.append("n")
     board.append("r")
-    for _ in range(8):
-        board.append("p")
-    for _ in range(32):
-        board.append("-")
-    for _ in range(8):
-        board.append("P")
+    for _ in range(8): board.append("p")
+    for _ in range(32): board.append("-")
+    for _ in range(8): board.append("P")
     board.append("R")
     board.append("N")
     board.append("B")
@@ -63,4 +53,5 @@ def InitBoard():
     board.append("B")
     board.append("N")
     board.append("R")
+    print(board)
     return board
