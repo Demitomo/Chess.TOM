@@ -337,19 +337,19 @@ class King(Piece):
         return False
 
     def PathIsClear(self, board, loc, dest):
-        Ypos = loc[1]
+        x_pos = loc[1]
         x_loc, x_dest = loc[0], dest[0]
 
         step = 1 if x_dest == 6 else -1
 
         col = x_loc + step
         for _ in range(3 if x_dest != 6 else 2):
-            if board[Ypos][col] != "-":
+            if board[x_pos][col] != "-":
                 return False
             col += step
 
-        if (board[Ypos][col] == "R" and self.color == "w") or (
-                board[Ypos][col] == "r" and self.color == "b"
+        if (board[x_pos][col] == "R" and self.color == "w") or (
+                board[x_pos][col] == "r" and self.color == "b"
         ):
             return True
 
