@@ -19,6 +19,7 @@ class Board:
         self.whiteToPlay = True
         self.running = True
         self.fps = py.time.Clock()
+        self.possibleMoves = []
 
     def PrintBoard(self):
         for y in range(8):
@@ -49,8 +50,24 @@ class Board:
                         return
 
                     self.selectedPiece = [x, y, self.board[y][x]]
+                    # Create a list of all possible moves
+                    # by calling the IsMoveLegal function
+                    # for each position of the selected piece
+
+                    self.possibleMoves.clear()
+                    for i in range(8):
+                        for j in range(8):
+                            temp_board = [row[:] for row in self.board]
+                            if Pieces[self.selectedPiece[2]].IsMoveLegal(
+                                    temp_board, self.selectedPiece[:2], [i, j]) is not False:
+                                self.possibleMoves.append([i, j])
+
+                    print(self.possibleMoves)
 
                 else:
+                    self.possibleMoves.clear()
+                    self.Display()
+
                     dest = [x, y]
                     if dest == self.selectedPiece[:2]:
                         self.selectedPiece = None
@@ -91,6 +108,9 @@ class Board:
             py.draw.rect(self.screen, "yellow", rect)
 
         self.PrintBoard()
+
+        for move in self.possibleMoves:
+            py.draw.circle(self.screen, "gray", (move[0] * 80 + 40, move[1] * 80 + 40), 10)
 
         py.display.flip()
 
