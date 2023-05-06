@@ -28,7 +28,7 @@ The best chess game made entirely in python with the [pygame](https://github.com
 - [ ] End screen/play again screen
 - [ ] Add a timer
 - [ ] Ability to change the piece by clicking on it
-- [ ] Display the possible moves of a piece
+- [x] Display the possible moves of a piece
 - [ ] Save the game
 - [ ] Use only one image for each piece (SVG) and fill it with the color of the player
 
@@ -49,5 +49,5 @@ Loads the images and resizes them, creates the classes for each piece with their
 This project is still in development, if you want to contribute, feel free to fork the repository and make a pull request !
 
 ## Authors
-- [Demitomo](https://github.com/Demitomo) (me) : Main developer of the application
+- [Demitomo](https://github.com/Demitomo)  : Main developer of the application
 - [pierrbt](https://github.com/pierrbt) : Helping with overall app workflow and code review
