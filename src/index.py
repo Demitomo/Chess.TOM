@@ -44,7 +44,7 @@ class Board:
                     if self.board[y][x] == "-":
                         return
                     if (self.board[y][x].islower() and self.whiteToPlay) or (
-                        self.board[y][x].isupper() and not self.whiteToPlay
+                            self.board[y][x].isupper() and not self.whiteToPlay
                     ):
                         return
 
@@ -101,10 +101,6 @@ class Board:
             self.fps.tick(60)
 
 
-py.display.set_caption("Chess.tom")
-
-Game = Board(window)
-
 Pieces = {
     "p": Pawn("b"),
     "n": Knight("b"),
@@ -120,4 +116,14 @@ Pieces = {
     "K": King("w"),
 }
 
-Game.Run()
+
+def Main():
+    py.display.set_caption("Chess.tom")
+    py.display.set_icon(py.image.load("../img/Icon.png"))
+
+    Game = Board(window)
+    Game.Run()
+
+
+if __name__ == "__main__":
+    Main()

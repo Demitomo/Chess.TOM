@@ -2,7 +2,7 @@ import pygame as py
 
 window = py.display.set_mode((640, 640))
 
-bgImg = py.image.load("../img/Board.png")
+bgImg = py.image.load("../img/Board.png", "png")
 bgImg = py.transform.scale(bgImg, (640, 640))
 
 LastMove = None
