@@ -1,99 +1,112 @@
-import pygame
+import pygame as py
 from pieces import *
-from checks import *
 
 class Board:
-    def __init__(self, screen, backgroundImg):
+    def __init__(self, screen) -> None:
         self.screen = screen
-        self.board = BoardInit()
-        self.bg = backgroundImg
-        self.area = pygame.Rect(700, 700, 80, 80)
+        self.board = [
+            ["r", "n", "b", "q", "k", "b", "n", "r"],
+            ["p", "p", "p", "p", "p", "p", "p", "p"],
+            ["-", "-", "-", "-", "-", "-", "-", "-"],
+            ["-", "-", "-", "-", "-", "-", "-", "-"],
+            ["-", "-", "-", "-", "-", "-", "-", "-"],
+            ["-", "-", "-", "-", "-", "-", "-", "-"],
+            ["P", "P", "P", "P", "P", "P", "P", "P"],
+            ["R", "N", "B", "Q", "K", "B", "N", "R"]
+        ]
+        self.selectedPiece = None
+        self.checkMate = False
+        self.whiteToPlay = True
         self.running = True
-        self.chose = False
-        self.WhiteToPlay = True
-        self.fps = pygame.time.Clock()
-    
+        self.fps = py.time.Clock()
+
+    def PrintBoard(self):
+        for y in range(8):
+            for x in range(8):
+                if self.board[y][x] == "-": continue
+                
+                Pieces[self.board[y][x]].DisplayPiece(x, y)
+
     def Events(self):
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
+        for event in py.event.get():
+            if event.type == py.QUIT:
                 self.running = False
 
-            elif event.type == pygame.MOUSEBUTTONDOWN:
-                MousePos = pygame.mouse.get_pos()
+            elif event.type == py.MOUSEBUTTONDOWN:
+                if event.button != 1: return
+                
+                pos = py.mouse.get_pos()
+                x, y = int(pos[0] / 80), int(pos[1] / 80)
 
-                if 30 <= MousePos[0] <= 670 and 30 <= MousePos[1] <= 670:
-                    x = int((MousePos[0] - 30) / 80)
-                    y = int((MousePos[1] - 30) / 80)
-                    loc = y * 8 + x
+                if self.selectedPiece == None:
+                    if self.board[y][x] == "-": return
+                    if (self.board[y][x].islower() and self.whiteToPlay) or (self.board[y][x].isupper() and not self.whiteToPlay): return
 
-                    if not self.chose:
-                        whitePiece = self.WhiteToPlay and self.board[loc].isupper()
-                        blackPiece = not self.WhiteToPlay and self.board[loc].islower()
+                    self.selectedPiece = [x, y, self.board[y][x]]
+                
+                else:
+                    dest = [x, y]
+                    if dest == self.selectedPiece[:2]:
+                        self.selectedPiece = None
+                        return
 
-                        if whitePiece or blackPiece:
-                            self.piece = self.board[loc]
-                            self.loc = loc
-                            self.area = pygame.Rect(x * 80 + 30, y * 80 + 30, 80, 80)
-                            self.chose = True
+                    Move = Pieces[self.selectedPiece[2]].IsMoveLegal(self.board, self.selectedPiece[:2], dest)
 
+                    if Move == False: return
                     else:
-                        if loc == self.loc:
-                            self.area = pygame.Rect(700, 700, 80, 80)
-                            self.chose = False
-                        else:
-                            if self.piece.lower() == "p": posbs = CheckPawn(self.loc, self.board)
-                            elif self.piece.lower() == "n": posbs = CheckKnight(self.loc, self.board)
-                            elif self.piece.lower() == "b": posbs = CheckBishop(self.loc, self.board)
-                            elif self.piece.lower() == "r": posbs = CheckRook(self.loc, self.board)
-                            elif self.piece.lower() == "q": posbs = CheckQueen(self.loc, self.board)
-                            elif self.piece.lower() == "k": posbs = CheckKing(self.loc, self.board)
+                        self.whiteToPlay = not self.whiteToPlay
+                        self.board = Move
 
+                        if self.selectedPiece[2] == "r":
+                            if self.selectedPiece[:2] == [0, 0]:
+                                Pieces["k"].rookMoved[1] == True
+                            elif self.selectedPiece[:2] == [7, 0]:
+                                Pieces["k"].rookMoved[0] == True
 
-                            if loc in posbs:
-                                self.board[self.loc] = "-"
-                                self.board[loc] = self.piece
-                                self.area = pygame.Rect(700, 700, 80, 80)
-                                self.chose = False
-                                if self.WhiteToPlay: self.WhiteToPlay = False
-                                else: self.WhiteToPlay = True
-
+                        elif self.selectedPiece[2] == "R":
+                            if self.selectedPiece[:2] == [0, 7]:
+                                Pieces["K"].rookMoved[1] == True
+                            elif self.selectedPiece[:2] == [7, 7]:
+                                Pieces["K"].rookMoved[0] == True
+                        
+                        self.selectedPiece = None
 
     def Display(self):
         self.screen.fill("black")
-        self.screen.blit(self.bg, (30, 30))
-        pygame.draw.rect(self.screen, "yellow", self.area)
+        self.screen.blit(bgImg, (0,0))
 
-        Stops = [0, 8, 16, 24, 32, 40, 48, 56]
-        for i, vali in enumerate(self.board):
-            if vali == "-":
-                continue
+        if self.selectedPiece != None:
+            rect = py.rect.Rect(self.selectedPiece[0] * 80, self.selectedPiece[1] * 80, 80, 80)
+            py.draw.rect(self.screen, "yellow", rect)
+        
+        self.PrintBoard()
 
-            x = 0
-            y = i
-            while y not in Stops:
-                x += 1
-                y -= 1
-            x = x * 80 + 30
-            y = y * 10 + 30
-
-            for z, valz in enumerate(pieces):
-                if vali == valz: 
-                    self.screen.blit(images[z], (x, y))
-
-        pygame.display.flip()
+        py.display.flip()
 
     def Run(self):
         while self.running:
             self.Events()
             self.Display()
             self.fps.tick(60)
+            
 
-pygame.init()
+py.display.set_caption("Chess.tom")
 
-window = pygame.display.set_mode((700, 700))
-pygame.display.set_caption("Chess.tom")
+Game = Board(window)
 
-Play = Board(window, bg)
-Play.Run()
+Pieces = {
+    "p": Pawn("b"),
+    "n": Knight("b"),
+    "b": Bishop("b"),
+    "r": Rook("b"),
+    "q": Queen("b"),
+    "k": King("b"),
+    "P": Pawn("w"),
+    "N": Knight("w"),
+    "B": Bishop("w"),
+    "R": Rook("w"),
+    "Q": Queen("w"),
+    "K": King("w")
+}
 
-pygame.quit()
+Game.Run()

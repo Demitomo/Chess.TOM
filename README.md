@@ -14,16 +14,17 @@ The best chess game made entirely in python!
 - [x] King Moves
 - [x] Queen Moves
 - [x] Pawn Moves/Takes
-- [ ] Pawn promotion
-- [ ] Castling
-- [ ] En passant
+- [x] Pawn promotion
+- [x] Castling (short and long)
+- [x] En passant
+- Finds checks and checkmates:
+- [ ] Verifies each turn if the king is in check
+- [ ] Check if it is checkmate
+- [ ] End screen/play again screen
 
 ## Functionalities of each file
 1. index.py:
 Game loop, display the board
 
 2. pieces.py:
-Loads the images and resizes them, creates the board
-
-3. checks.py:
-Verifies if the pieces can move to the selected square and if the king is in check
+Loads the images and resizes them, creates the classes for each piece with their own specific movement
