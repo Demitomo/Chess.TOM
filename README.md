@@ -1,5 +1,5 @@
 # Chess.tom
-The best chess game made entirely in python!
+The best chess game made entirely in python with pygame!
 
 ## Functionalities
 1. Display the pieces in any given positions
