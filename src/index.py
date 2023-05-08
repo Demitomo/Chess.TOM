@@ -59,27 +59,24 @@ class Board:
                         for j in range(8):
                             temp_board = [row[:] for row in self.board]
                             if Pieces[self.selectedPiece[2]].IsMoveLegal(
-                                    temp_board, self.selectedPiece[:2], [i, j]) is not False:
+                                    temp_board, self.selectedPiece[:2], [i, j], True) is not False:
                                 self.possibleMoves.append([i, j])
 
-                    print(self.possibleMoves)
-
                 else:
-                    self.possibleMoves.clear()
-                    self.Display()
-
                     dest = [x, y]
                     if dest == self.selectedPiece[:2]:
                         self.selectedPiece = None
+                        self.possibleMoves.clear()
                         return
 
                     Move = Pieces[self.selectedPiece[2]].IsMoveLegal(
-                        self.board, self.selectedPiece[:2], dest
+                        self.board, self.selectedPiece[:2], dest, False
                     )
 
                     if not Move:
                         return
                     else:
+                        self.possibleMoves.clear()
                         self.whiteToPlay = not self.whiteToPlay
                         self.board = Move
 
@@ -110,7 +107,7 @@ class Board:
         self.PrintBoard()
 
         for move in self.possibleMoves:
-            py.draw.circle(self.screen, "gray", (move[0] * 80 + 40, move[1] * 80 + 40), 10)
+            py.draw.circle(self.screen, "darkgray", (move[0] * 80 + 40, move[1] * 80 + 40), 10)
 
         py.display.flip()
 
@@ -139,7 +136,7 @@ Pieces = {
 
 def Main():
     py.display.set_caption("Chess.tom")
-    py.display.set_icon(py.image.load("../img/Icon.png"))
+    py.display.set_icon(py.image.load("Python/chess/GitHub/img/Icon.png"))
 
     Game = Board(window)
     Game.Run()

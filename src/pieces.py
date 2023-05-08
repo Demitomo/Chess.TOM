@@ -2,7 +2,7 @@ import pygame as py
 
 window = py.display.set_mode((640, 640))
 
-bgImg = py.image.load("../img/Board.png", "png")
+bgImg = py.image.load("Python/chess/GitHub/img/Board.png", "png")
 bgImg = py.transform.scale(bgImg, (640, 640))
 
 LastMove = None
@@ -12,7 +12,7 @@ class Piece:
     def __init__(self, color) -> None:
         self.color = color
 
-    def IsMoveLegal(self, board, loc, dest):
+    def IsMoveLegal(self, board, loc, dest, checkingMoves):
         pass
 
     def DisplayPiece(self, x, y):
@@ -23,12 +23,11 @@ class Pawn(Piece):
     def __init__(self, color) -> None:
         super().__init__(color)
         self.image = py.image.load(
-            "../img/Wpawn.png" if self.color == "w" else "../img/Bpawn.png"
+            "Python/chess/GitHub/img/Wpawn.png" if self.color == "w" else "Python/chess/GitHub/img/Bpawn.png"
         )
         self.image = py.transform.scale(self.image, (80, 80))
-        self.image = py.transform.scale(self.image, (80, 80))
 
-    def IsMoveLegal(self, board, loc, dest):
+    def IsMoveLegal(self, board, loc, dest, checkingMoves):
         global LastMove
 
         x_loc, y_loc = loc[0], loc[1]
@@ -45,7 +44,7 @@ class Pawn(Piece):
                 else:
                     board[y_dest][x_dest] = "P" if self.color == "w" else "p"
                     board[y_loc][x_loc] = "-"
-                LastMove = None
+                if not checkingMoves: LastMove = None
                 return board
 
         elif (
@@ -54,13 +53,13 @@ class Pawn(Piece):
         ) and x_loc - x_dest == 0:
             if (
                     board[y_dest][x_dest] == "-"
-                    and board[y_dest - 1 if self.color == "w" else y_dest + 1][x_dest]
+                    and board[y_dest + 1 if self.color == "w" else y_dest - 1][x_dest]
                     == "-"
             ):
                 if y_loc == 1 or y_loc == 6:
                     board[y_dest][x_dest] = "P" if self.color == "w" else "p"
                     board[y_loc][x_loc] = "-"
-                    LastMove = x_dest
+                    if not checkingMoves: LastMove = x_dest
                     return board
 
         elif abs(x_loc - x_dest) == 1 and (
@@ -76,14 +75,14 @@ class Pawn(Piece):
                 else:
                     board[y_dest][x_dest] = "P" if self.color == "w" else "p"
                     board[y_loc][x_loc] = "-"
-                LastMove = None
+                if not checkingMoves: LastMove = None
                 return board
 
-            elif board[y_dest][x_dest] == "-" and x_dest == LastMove:
+            elif board[y_dest][x_dest] == "-" and x_dest == LastMove and ((y_loc == 3 and self.color == "w") or (y_loc == 4 and self.color == "b")):
                 board[y_dest][x_dest] = "P" if self.color == "w" else "p"
                 board[y_loc][x_loc] = "-"
                 board[(y_dest + 1) if self.color == "w" else (y_dest - 1)][x_dest] = "-"
-                LastMove = None
+                if not checkingMoves: LastMove = None
                 return board
 
         return False
@@ -97,11 +96,11 @@ class Knight(Piece):
     def __init__(self, color) -> None:
         super().__init__(color)
         self.image = py.image.load(
-            "../img/Wknig.png" if self.color == "w" else "../img/Bknig.png"
+            "Python/chess/GitHub/img/Wknig.png" if self.color == "w" else "Python/chess/GitHub/img/Bknig.png"
         )
         self.image = py.transform.scale(self.image, (80, 80))
 
-    def IsMoveLegal(self, board, loc, dest):
+    def IsMoveLegal(self, board, loc, dest, checkingMoves):
         global LastMove
 
         x_loc, y_loc = loc[0], loc[1]
@@ -116,7 +115,7 @@ class Knight(Piece):
                 return False
             board[y_dest][x_dest] = "N" if self.color == "w" else "n"
             board[y_loc][x_loc] = "-"
-            LastMove = None
+            if not checkingMoves: LastMove = None
             return board
 
         return False
@@ -126,11 +125,11 @@ class Bishop(Piece):
     def __init__(self, color) -> None:
         super().__init__(color)
         self.image = py.image.load(
-            "../img/Wbish.png" if self.color == "w" else "../img/Bbish.png"
+            "Python/chess/GitHub/img/Wbish.png" if self.color == "w" else "Python/chess/GitHub/img/Bbish.png"
         )
         self.image = py.transform.scale(self.image, (80, 80))
 
-    def IsMoveLegal(self, board, loc, dest):
+    def IsMoveLegal(self, board, loc, dest, checkingMoves):
         global LastMove
 
         if loc == dest:
@@ -147,7 +146,7 @@ class Bishop(Piece):
             if self.PathIsClear(board, loc, dest):
                 board[y_dest][x_dest] = "B" if self.color == "w" else "b"
                 board[y_loc][x_loc] = "-"
-                LastMove = None
+                if not checkingMoves: LastMove = None
                 return board
 
         return False
@@ -175,11 +174,11 @@ class Rook(Piece):
     def __init__(self, color) -> None:
         super().__init__(color)
         self.image = py.image.load(
-            "../img/Wrook.png" if self.color == "w" else "../img/Brook.png"
+            "Python/chess/GitHub/img/Wrook.png" if self.color == "w" else "Python/chess/GitHub/img/Brook.png"
         )
         self.image = py.transform.scale(self.image, (80, 80))
 
-    def IsMoveLegal(self, board, loc, dest):
+    def IsMoveLegal(self, board, loc, dest, checkingMoves):
         global LastMove
 
         if loc == dest:
@@ -198,7 +197,7 @@ class Rook(Piece):
             if self.PathIsClear(board, loc, dest):
                 board[y_dest][x_dest] = "R" if self.color == "w" else "r"
                 board[y_loc][x_loc] = "-"
-                LastMove = None
+                if not checkingMoves: LastMove = None
                 return board
 
         return False
@@ -225,11 +224,11 @@ class Queen(Piece):
     def __init__(self, color) -> None:
         super().__init__(color)
         self.image = py.image.load(
-            "../img/Wqueen.png" if self.color == "w" else "../img/Bqueen.png"
+            "Python/chess/GitHub/img/Wqueen.png" if self.color == "w" else "Python/chess/GitHub/img/Bqueen.png"
         )
         self.image = py.transform.scale(self.image, (80, 80))
 
-    def IsMoveLegal(self, board, loc, dest):
+    def IsMoveLegal(self, board, loc, dest, checkingMoves):
         global LastMove
 
         if loc == dest:
@@ -246,7 +245,7 @@ class Queen(Piece):
             if self.PathIsClear(board, loc, dest):
                 board[y_dest][x_dest] = "Q" if self.color == "w" else "q"
                 board[y_loc][x_loc] = "-"
-                LastMove = None
+                if not checkingMoves: LastMove = None
                 return board
 
         elif (abs(x_loc - x_dest) > 0 and abs(y_loc - y_dest) == 0) or (
@@ -259,7 +258,7 @@ class Queen(Piece):
             if self.PathIsClear(board, loc, dest):
                 board[y_dest][x_dest] = "Q" if self.color == "w" else "q"
                 board[y_loc][x_loc] = "-"
-                LastMove = None
+                if not checkingMoves: LastMove = None
                 return board
 
         return False
@@ -288,11 +287,11 @@ class King(Piece):
         self.hasMoved = False
         self.rookMoved = [False, False]
         self.image = py.image.load(
-            "../img/Wking.png" if self.color == "w" else "../img/Bking.png"
+            "Python/chess/GitHub/img/Wking.png" if self.color == "w" else "Python/chess/GitHub/img/Bking.png"
         )
         self.image = py.transform.scale(self.image, (80, 80))
 
-    def IsMoveLegal(self, board, loc, dest):
+    def IsMoveLegal(self, board, loc, dest, checkingMoves):
         global LastMove
 
         if loc == dest:
@@ -306,10 +305,10 @@ class King(Piece):
                     board[y_dest][x_dest].isupper() and self.color == "w"
             ):
                 return False
-            self.hasMoved = True
+            if not checkingMoves: self.hasMoved = True
             board[y_dest][x_dest] = "K" if self.color == "w" else "k"
             board[y_loc][x_loc] = "-"
-            LastMove = None
+            if not checkingMoves: LastMove = None
             return board
 
         elif abs(x_loc - x_dest) == 2 and y_loc - y_dest == 0:
@@ -317,21 +316,21 @@ class King(Piece):
                 return False
             if self.PathIsClear(board, loc, dest):
                 if not self.rookMoved[0] and x_dest - x_loc == 2:
-                    self.hasMoved = True
+                    if not checkingMoves: self.hasMoved = True
                     board[y_dest][x_dest] = "K" if self.color == "w" else "k"
                     board[y_loc][x_loc] = "-"
                     board[y_dest][x_dest - 1] = "R" if self.color == "w" else "r"
                     board[y_dest][x_dest + 1] = "-"
-                    LastMove = None
+                    if not checkingMoves: LastMove = None
                     return board
 
                 elif not self.rookMoved[1] and x_loc - x_dest == 2:
-                    self.hasMoved = True
+                    if not checkingMoves: self.hasMoved = True
                     board[y_dest][x_dest] = "K" if self.color == "w" else "k"
                     board[y_loc][x_loc] = "-"
                     board[y_dest][x_dest - 2] = "-"
                     board[y_dest][x_dest + 1] = "R" if self.color == "w" else "r"
-                    LastMove = None
+                    if not checkingMoves: LastMove = None
                     return board
 
         return False
