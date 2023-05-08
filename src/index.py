@@ -136,7 +136,7 @@ Pieces = {
 
 def Main():
     py.display.set_caption("Chess.tom")
-    py.display.set_icon(py.image.load("Python/chess/GitHub/img/Icon.png"))
+    py.display.set_icon(py.image.load("../img/Icon.png"))
 
     Game = Board(window)
     Game.Run()

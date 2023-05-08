@@ -2,7 +2,7 @@ import pygame as py
 
 window = py.display.set_mode((640, 640))
 
-bgImg = py.image.load("Python/chess/GitHub/img/Board.png", "png")
+bgImg = py.image.load("../img/Board.png", "png")
 bgImg = py.transform.scale(bgImg, (640, 640))
 
 LastMove = None
@@ -23,7 +23,7 @@ class Pawn(Piece):
     def __init__(self, color) -> None:
         super().__init__(color)
         self.image = py.image.load(
-            "Python/chess/GitHub/img/Wpawn.png" if self.color == "w" else "Python/chess/GitHub/img/Bpawn.png"
+            "../img/Wpawn.png" if self.color == "w" else "../img/Bpawn.png"
         )
         self.image = py.transform.scale(self.image, (80, 80))
 
@@ -96,7 +96,7 @@ class Knight(Piece):
     def __init__(self, color) -> None:
         super().__init__(color)
         self.image = py.image.load(
-            "Python/chess/GitHub/img/Wknig.png" if self.color == "w" else "Python/chess/GitHub/img/Bknig.png"
+            "../img/Wknig.png" if self.color == "w" else "../img/Bknig.png"
         )
         self.image = py.transform.scale(self.image, (80, 80))
 
@@ -125,7 +125,7 @@ class Bishop(Piece):
     def __init__(self, color) -> None:
         super().__init__(color)
         self.image = py.image.load(
-            "Python/chess/GitHub/img/Wbish.png" if self.color == "w" else "Python/chess/GitHub/img/Bbish.png"
+            "../img/Wbish.png" if self.color == "w" else "../img/Bbish.png"
         )
         self.image = py.transform.scale(self.image, (80, 80))
 
@@ -174,7 +174,7 @@ class Rook(Piece):
     def __init__(self, color) -> None:
         super().__init__(color)
         self.image = py.image.load(
-            "Python/chess/GitHub/img/Wrook.png" if self.color == "w" else "Python/chess/GitHub/img/Brook.png"
+            "../img/Wrook.png" if self.color == "w" else "../img/Brook.png"
         )
         self.image = py.transform.scale(self.image, (80, 80))
 
@@ -224,7 +224,7 @@ class Queen(Piece):
     def __init__(self, color) -> None:
         super().__init__(color)
         self.image = py.image.load(
-            "Python/chess/GitHub/img/Wqueen.png" if self.color == "w" else "Python/chess/GitHub/img/Bqueen.png"
+            "../img/Wqueen.png" if self.color == "w" else "../img/Bqueen.png"
         )
         self.image = py.transform.scale(self.image, (80, 80))
 
@@ -287,7 +287,7 @@ class King(Piece):
         self.hasMoved = False
         self.rookMoved = [False, False]
         self.image = py.image.load(
-            "Python/chess/GitHub/img/Wking.png" if self.color == "w" else "Python/chess/GitHub/img/Bking.png"
+            "../img/Wking.png" if self.color == "w" else "../img/Bking.png"
         )
         self.image = py.transform.scale(self.image, (80, 80))
 
